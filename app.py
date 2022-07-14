@@ -54,17 +54,17 @@ def render_login():
 
 
 # 에러_템플릿 작성 페이지 by siwon
-@app.route('/detail')
+@app.route('/write')
 def detail():
     error = list(db.errors.find({}, {'_id': False}))
-    return render_template("detail.html", error=error)
+    return render_template("write.html", error=error)
     
     
 # 에러_템플릿 디테일 by siwon
-@app.route('/detail1')
+@app.route('/writelist')
 def detail1():
     errors = list(db.error.find({}, {'_id': False}))
-    return render_template("detail1.html", errors=errors)
+    return render_template("writelist.html", errors=errors)
 
 
 
