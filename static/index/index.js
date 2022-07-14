@@ -13,38 +13,26 @@ function get_posts(username) {
 
         for (let i = 0; i < posts.length; i++) {
           let post = posts[i]
-          console.log(post)
+          let errorId = post["_id"]
           let error_msg = post["message"]
           let error_lang= post["language"]
           let error_solu= post["solution"]
-          let error_state= post["state"]
-          let error_note= post["note"]
-          let error_link= post["link"]
-
-          let error_temp = 
+          const section = document.createElement('section');
+          section.className = 'box'
+          section.dataset.id = errorId
+          section.innerHTML = 
             `
-            <section class="box">
               <div class="content">
-                <div>
-                  <h5> ${error_msg} <span>@username</span> <span>10분 전</span> </h5>
+                <div class="content_title">
+                  <span class="paint_red"> ${error_msg} </span> <span>@username</span> <span>10분 전</span>
                 </div>
-                <div>${error_lang}</div>
-                <p>
-                    ${error_state}
-                </p>
-                <p>
+                <div class="content_lang"><span>${error_lang}</span></div>
+                <p class="content_solution paint_green">
                     ${error_solu}
                 </p>
-                <p>
-                    ${error_note}
-                </p>
-                <p>
-                    ${error_link}
-                </p>
               </div>
-            </section>
             `
-            $(".error_note_container").append(error_temp)
+            $(".error_note_container").append(section)
         }
       }
     }
@@ -56,3 +44,17 @@ window.onload = get_posts()
 const go_write = () => {
   window.location.href= '/write'
 }
+
+const show_detail = (errorId) => {
+  window.location.href = `/error_detail/${errorId}`;
+}
+
+const error_note_container = document.querySelector('.error_note_container');
+error_note_container.addEventListener('click',(e) => {
+  const box = e.target.closest('.box');
+  if(!box){
+    return
+  }
+  errorId = box.dataset.id
+  show_detail(errorId)
+})
