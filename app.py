@@ -30,7 +30,6 @@ db = client.error_note
 @app.route('/')
 def render_index():
     token_receive = request.cookies.get('mytoken')
-    print(token_receive)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
@@ -144,6 +143,43 @@ def error_post():
     db.error.insert_one(doc)
 
     return jsonify({'result': 'success', 'msg': '작성 완료!'})
+
+# 전체 에러_템플릿 받아오기
+@app.route("/get_posts", methods=['GET'])
+def get_posts():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        username_receive = request.args.get("username_give")
+        # 포스팅 목록 받아오기
+        # if username_receive == "":
+        #     posts = list(db.posts.find({}).sort("date", -1).limit(20))
+        # else:
+        #     posts = list(db.posts.find({"username":username_receive}).sort("date", -1).limit(20))
+        posts = [
+            {
+                "message": '에러 메세지입니다.',
+                "language": 'python',
+                "solution": '해결책은 다음과 같습니다.'
+            },
+            # {
+            #     "message": '1.',
+            #     "language": 'python',
+            #     "solution": '해결책은 다음과 같습니다.'
+            # },
+            # {
+            #     "message": '에러 메세지입니다3223ㄱ232344.',
+            #     "language": 'Javascript',
+            #     "solution": '해결책은 다음과 같습니ㅊㅇㅊㅇㅊㅇㅊ다.'
+            # }
+        ]
+        # for post in posts:
+    #         post["_id"] = str(post["_id"])    
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+    # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+    #     return redirect(url_for("home"))
+    except :
+        return jsonify({"result": "fail", "msg": "실패" })
 
 
 # 포트
