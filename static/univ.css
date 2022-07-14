@@ -5,6 +5,7 @@ body{
   align-items: center;
   background-color: rgb(25, 31, 48);
   white-space:no-wrap;
+  overflow-y: scroll;
 }
 .banner{
   height: 200px;
@@ -17,7 +18,7 @@ body{
   width: 300px;
 }
 .paint_green{
-  color: greenyellow;
+  color: rgb(0, 154, 13);
 }
 .paint_red{
   color: red;
