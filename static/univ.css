@@ -6,6 +6,16 @@ body{
   background-color: rgb(25, 31, 48);
   white-space:no-wrap;
 }
+.banner{
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0px;
+}
+.banner .logo_img{
+  width: 300px;
+}
 .paint_green{
   color: greenyellow;
 }
