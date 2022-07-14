@@ -149,38 +149,19 @@ def error_post():
 def get_posts():
     token_receive = request.cookies.get('mytoken')
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         username_receive = request.args.get("username_give")
         # 포스팅 목록 받아오기
-        # if username_receive == "":
-        #     posts = list(db.posts.find({}).sort("date", -1).limit(20))
-        # else:
-        #     posts = list(db.posts.find({"username":username_receive}).sort("date", -1).limit(20))
-        posts = [
-            {
-                "message": '에러 메세지입니다.',
-                "language": 'python',
-                "solution": '해결책은 다음과 같습니다.'
-            },
-            # {
-            #     "message": '1.',
-            #     "language": 'python',
-            #     "solution": '해결책은 다음과 같습니다.'
-            # },
-            # {
-            #     "message": '에러 메세지입니다3223ㄱ232344.',
-            #     "language": 'Javascript',
-            #     "solution": '해결책은 다음과 같습니ㅊㅇㅊㅇㅊㅇㅊ다.'
-            # }
-        ]
-        # for post in posts:
-    #         post["_id"] = str(post["_id"])    
+        if username_receive == None:
+            posts = list(db.error.find({}))
+        else:
+            posts = list(db.error.find({"username":username_receive}))
+        for post in posts:
+            post["_id"] = str(post["_id"])
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
-    # except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-    #     return redirect(url_for("home"))
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
     except :
         return jsonify({"result": "fail", "msg": "실패" })
-
 
 # 포트
 if __name__ == '__main__':

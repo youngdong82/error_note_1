@@ -9,16 +9,18 @@ function get_posts(username) {
     data: {},
     success: function (response) {
       if (response["result"] == "success") {
-        console.log(response)
         let posts = response["posts"]
 
         for (let i = 0; i < posts.length; i++) {
           let post = posts[i]
+          console.log(post)
           let error_msg = post["message"]
           let error_lang= post["language"]
           let error_solu= post["solution"]
+          let error_state= post["state"]
+          let error_note= post["note"]
+          let error_link= post["link"]
 
-          console.log(error_msg, error_lang, error_solu)
           let error_temp = 
             `
             <section class="box">
@@ -28,7 +30,16 @@ function get_posts(username) {
                 </div>
                 <div>${error_lang}</div>
                 <p>
+                    ${error_state}
+                </p>
+                <p>
                     ${error_solu}
+                </p>
+                <p>
+                    ${error_note}
+                </p>
+                <p>
+                    ${error_link}
                 </p>
               </div>
             </section>
@@ -41,3 +52,7 @@ function get_posts(username) {
 }
 
 window.onload = get_posts()
+
+const go_write = () => {
+  window.location.href= '/write'
+}
