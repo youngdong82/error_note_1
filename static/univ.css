@@ -1,0 +1,14 @@
+body{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(25, 31, 48);
+  white-space:no-wrap;
+}
+.paint_green{
+  color: greenyellow;
+}
+.paint_red{
+  color: red;
+}
