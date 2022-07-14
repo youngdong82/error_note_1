@@ -1,0 +1,12 @@
+.error_detail_box {
+  width: 500px;
+}
+
+.field > label {
+  color: white;
+}
+.page_btn{
+  display: flex;
+  width: 500px;
+  margin: 20px 0px;
+}

@@ -1,12 +1,20 @@
 .box{
   width: 500px;
 }
-.error_note_container{
-  overflow-y: scroll;
+.content_title{
+  font-size: 18px;
+  margin-bottom: 14px;
 }
-#please{
+.content_lang{
   display: flex;
-
+  justify-content: flex-end;
+  margin-bottom: 30px;
+}
+.content_solution{
+  font-size: 14px;
+}
+.page_btn{
+  display: flex;
   width: 500px;
   margin: 20px 0px;
 }
