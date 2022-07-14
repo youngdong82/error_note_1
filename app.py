@@ -1,4 +1,5 @@
 # 서버 구조
+from bson import ObjectId
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from pymongo import MongoClient # DB 관련
 import certifi # DB 보완문제 해결
@@ -30,26 +31,32 @@ db = client.error_note
 @app.route('/')
 def render_index():
     token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]})
-        return render_template('index.html', user_info=user_info)
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+    if token_receive:
+        try:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+            user_info = db.users.find_one({"username": payload["id"]})
+            return render_template('index.html', user_info=user_info)
+        except jwt.ExpiredSignatureError:
+            return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+        except jwt.exceptions.DecodeError:
+            return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+    else:
+        return redirect('/login')
 
 # 회원가입 페이지 by youngdong
 @app.route('/register')
 def render_register():
-  msg = request.args.get("msg")
-  return render_template('register.html', msg=msg)
+    msg = request.args.get("msg")
+    return render_template('register.html', msg=msg)
 
 # 로그인 페이지 by youngdong
 @app.route('/login')
 def render_login():
-  msg = request.args.get("msg")
-  return render_template('login.html', msg=msg)
+    token_receive = request.cookies.get('mytoken')
+    if token_receive == None :
+        return render_template('login.html')
+    else:
+        return redirect('/')
 
 
 # 에러_템플릿 작성 페이지 by siwon
@@ -59,13 +66,10 @@ def detail():
     return render_template("write.html", error=error)
     
     
-# 에러_템플릿 디테일 by siwon
-@app.route('/writelist')
-def detail1():
-    errors = list(db.error.find({}, {'_id': False}))
-    return render_template("writelist.html", errors=errors)
-
-
+# 에러_템플릿 디테일 by siwon + youngdong
+@app.route('/error_detail/<error_id>')
+def error_detail(error_id):
+    return render_template("error_detail.html")
 
 # --------------------------------------- 액션
 # 로그인하기 by youngdong
@@ -147,12 +151,11 @@ def error_post():
 # 전체 에러_템플릿 받아오기
 @app.route("/get_posts", methods=['GET'])
 def get_posts():
-    token_receive = request.cookies.get('mytoken')
     try:
         username_receive = request.args.get("username_give")
         # 포스팅 목록 받아오기
         if username_receive == None:
-            posts = list(db.error.find({}))
+            posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
         else:
             posts = list(db.error.find({"username":username_receive}))
         for post in posts:
@@ -162,6 +165,17 @@ def get_posts():
         return redirect(url_for("home"))
     except :
         return jsonify({"result": "fail", "msg": "실패" })
+
+@app.route("/get_post/<error_id>", methods=['GET'])
+def get_post_error_id(error_id):
+    try:
+        detail = db.error.find_one({'_id': ObjectId(error_id) }, {'_id': False})
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "detail": detail})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+    except :
+        return jsonify({"result": "fail", "msg": "실패" })
+
 
 # 포트
 if __name__ == '__main__':
