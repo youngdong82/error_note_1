@@ -131,7 +131,8 @@ def error_get():
 def error_post():
     token_receive = request.cookies.get('mytoken')
     try:
-        user_id = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        token_data = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id = token_data['id']
         created_at = request.form['createdAt']
         message_receive = request.form['message_give']
         language_receive = request.form['language_give']
