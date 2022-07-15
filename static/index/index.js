@@ -1,5 +1,4 @@
 const get_diff_time = (createdAt) => {
-  const now = Date.now();
   const diff = Date.now() - createdAt
   const standard_diff = parseInt(diff / 1000)
 
