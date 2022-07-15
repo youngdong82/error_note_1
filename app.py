@@ -129,24 +129,31 @@ def error_get():
 # 에러_템플릿 작성하기 by siwon
 @app.route("/error_post", methods=["POST"])
 def error_post():
-    message_receive = request.form['message_give']
-    language_receive = request.form['language_give']
-    state_receive = request.form['state_give']
-    solution_receive = request.form['solution_give']
-    note_receive = request.form['note_give']
-    link_receive = request.form['link_give']
+    token_receive = request.cookies.get('mytoken')
+    try:
+        user_id = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        created_at = request.form['createdAt']
+        message_receive = request.form['message_give']
+        language_receive = request.form['language_give']
+        state_receive = request.form['state_give']
+        solution_receive = request.form['solution_give']
+        note_receive = request.form['note_give']
+        link_receive = request.form['link_give']
 
-    doc = {
-        'message': message_receive,
-        'language': language_receive,
-        'state': state_receive,
-        'solution': solution_receive,
-        'note': note_receive,
-        'link': link_receive
-    }
-    db.error.insert_one(doc)
-
-    return jsonify({'result': 'success', 'msg': '작성 완료!'})
+        doc = {
+            'user_id': user_id,
+            'created_at': created_at,
+            'message': message_receive,
+            'language': language_receive,
+            'state': state_receive,
+            'solution': solution_receive,
+            'note': note_receive,
+            'link': link_receive
+        }
+        db.error.insert_one(doc)
+        return jsonify({'result': 'success', 'msg': '작성 완료!'})
+    except(jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect('/')
 
 # 전체 에러_템플릿 받아오기
 @app.route("/get_posts", methods=['GET'])
