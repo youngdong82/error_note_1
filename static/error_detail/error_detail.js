@@ -10,7 +10,6 @@ const get_detaill = () => {
       if (response["result"] == "success") {
         const detail = response["detail"]
         const error_detail_box = document.querySelector('.error_detail_box');
-        console.log(detail)
         error_detail_box.innerHTML = `
         <div class="field">
           <div class="box">
@@ -36,7 +35,6 @@ const get_detaill = () => {
 window.onload = get_detaill
 
 const page_btn = document.querySelector('.page_btn');
-console.log(page_btn)
 page_btn.addEventListener('click', () => {
   window.location.href = '/'
 })
