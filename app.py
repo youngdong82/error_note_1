@@ -129,38 +129,44 @@ def error_get():
 # 에러_템플릿 작성하기 by siwon
 @app.route("/error_post", methods=["POST"])
 def error_post():
-    message_receive = request.form['message_give']
-    language_receive = request.form['language_give']
-    state_receive = request.form['state_give']
-    solution_receive = request.form['solution_give']
-    note_receive = request.form['note_give']
-    link_receive = request.form['link_give']
+    token_receive = request.cookies.get('mytoken')
+    try:
+        token_data = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_id = token_data['id']
+        created_at = request.form['createdAt']
+        message_receive = request.form['message_give']
+        language_receive = request.form['language_give']
+        state_receive = request.form['state_give']
+        solution_receive = request.form['solution_give']
+        note_receive = request.form['note_give']
+        link_receive = request.form['link_give']
 
-    doc = {
-        'message': message_receive,
-        'language': language_receive,
-        'state': state_receive,
-        'solution': solution_receive,
-        'note': note_receive,
-        'link': link_receive
-    }
-    db.error.insert_one(doc)
-
-    return jsonify({'result': 'success', 'msg': '작성 완료!'})
+        doc = {
+            'user_id': user_id,
+            'created_at': created_at,
+            'message': message_receive,
+            'language': language_receive,
+            'state': state_receive,
+            'solution': solution_receive,
+            'note': note_receive,
+            'link': link_receive
+        }
+        db.error.insert_one(doc)
+        return jsonify({'result': 'success', 'msg': '작성 완료!'})
+    except(jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect('/')
 
 # 전체 에러_템플릿 받아오기
 @app.route("/get_posts", methods=['GET'])
 def get_posts():
+    token_receive = request.cookies.get('mytoken')
+    user_state = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])['id']
     try:
-        username_receive = request.args.get("username_give")
         # 포스팅 목록 받아오기
-        if username_receive == None:
-            posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
-        else:
-            posts = list(db.error.find({"username":username_receive}))
+        posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
         for post in posts:
             post["_id"] = str(post["_id"])
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "user_state": user_state})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
     except :

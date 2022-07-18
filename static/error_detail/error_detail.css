@@ -1,9 +1,10 @@
 .error_detail_box {
   width: 500px;
 }
-
-.field > label {
-  color: white;
+.field .box span{
+  display: block;
+  margin-left: 10px;
+  margin-bottom: 30px;
 }
 .page_btn{
   display: flex;

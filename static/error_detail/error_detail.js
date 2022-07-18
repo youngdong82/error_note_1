@@ -13,42 +13,20 @@ const get_detaill = () => {
         console.log(detail)
         error_detail_box.innerHTML = `
         <div class="field">
+          <div class="box">
             <label class="label">오류메세지</label>
-            <div class="box">
-              ${detail.message}
-            </div>
-        </div>
-
-        <div class="field">
+                <span>${detail.message}</span>
             <label class="label">사용언어</label>
-            <div class="box">
-            ${detail.language}
-            </div>
-        </div>
-
-        <div class="field">
+                <span>${detail.language}</span>
             <label class="label">오류 상황</label>
-            <div class="box">
-            ${detail.status}
-            </div>
-        </div>
-        <div class="field">
+                <span>${detail.status}</span>
             <label class="label">오류 해결 방법</label>
-            <div class="box">
-            ${detail.solution}
-            </div>
-        </div>
-        <div class="field">
+                <span>${detail.solution}</span>
             <label class="label">관련 개념</label>
-            <div class="box">
-            ${detail.note}
-            </div>
-        </div>
-        <div class="field">
+                <span>${detail.note === '' ? "-----" : detail.note}</span>
             <label class="label">참고 링크</label>
-            <div class="box">
-              <a href='${detail.link}' >${detail.link}</a>
-            </div>
+                <a href='${detail.link}' >${detail.link}</a>
+          </div>
         </div>
         `;
       }
@@ -56,3 +34,13 @@ const get_detaill = () => {
   })
 }
 window.onload = get_detaill
+
+const page_btn = document.querySelector('.page_btn');
+console.log(page_btn)
+page_btn.addEventListener('click', () => {
+  window.location.href = '/'
+})
+const logo_img = document.querySelector('.logo_img');
+logo_img.addEventListener('click', () => {
+  window.location.href = '/'
+})
