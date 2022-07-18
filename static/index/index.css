@@ -3,6 +3,7 @@
   height: 50px;
   display: flex;
   justify-content: space-between;
+  margin: 20px 0px;
 }
 .tag_btn{
   min-width: 70px;

@@ -8,11 +8,11 @@ body{
   overflow-y: scroll;
 }
 .banner{
-  height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px 0px;
+  margin-top: 50px;
+  margin-bottom: 70px;
 }
 .banner .logo_img{
   cursor: pointer;
