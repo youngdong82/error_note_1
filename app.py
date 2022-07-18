@@ -159,16 +159,14 @@ def error_post():
 # 전체 에러_템플릿 받아오기
 @app.route("/get_posts", methods=['GET'])
 def get_posts():
+    token_receive = request.cookies.get('mytoken')
+    user_state = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])['id']
     try:
-        username_receive = request.args.get("username_give")
         # 포스팅 목록 받아오기
-        if username_receive == None:
-            posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
-        else:
-            posts = list(db.error.find({"username":username_receive}))
+        posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
         for post in posts:
             post["_id"] = str(post["_id"])
-        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts})
+        return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "user_state": user_state})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
     except :

@@ -1,3 +1,18 @@
+.btn_container{
+  width: 500px;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+}
+.btn_container .button{
+  font-size: 12px;
+}
+.clicked_btn{
+  border: 1rem solid rgb(209, 91, 0);;
+}
+
+
+
 .box{
   width: 500px;
 }

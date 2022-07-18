@@ -19,10 +19,7 @@ const get_diff_time = (createdAt) => {
   return final_diff
 }
 
-function get_posts(username) {
-  if (username == undefined) {
-    username = ""
-  }
+function get_posts() {
   $(".error_note_container").empty()
   $.ajax({
     type: "GET",
@@ -31,6 +28,10 @@ function get_posts(username) {
     success: function (response) {
       if (response["result"] == "success") {
         let posts = response["posts"]
+        user_state = response['user_state']
+        posts.sort((a,b) => {
+          return b['created_at'] - a['created_at']
+        })
 
         for (let i = 0; i < posts.length; i++) {
           let post = posts[i]
@@ -38,6 +39,9 @@ function get_posts(username) {
           let created_at = parseInt(post["created_at"])
           const diff_time = get_diff_time(created_at)
 
+          if(!my_error_btn.classList.contains('is-light') && user_id !== user_state){
+            continue
+          }
           let errorId = post["_id"]
           let error_msg = post["message"]
           let error_lang= post["language"]
@@ -57,7 +61,7 @@ function get_posts(username) {
                 </p>
               </div>
             `
-            $(".error_note_container").append(section)
+          $(".error_note_container").append(section)
         }
       }
     }
@@ -74,6 +78,7 @@ const show_detail = (errorId) => {
   window.location.href = `/error_detail/${errorId}`;
 }
 
+// 디테일 화면 연결하기
 const error_note_container = document.querySelector('.error_note_container');
 error_note_container.addEventListener('click',(e) => {
   const box = e.target.closest('.box');
@@ -82,4 +87,12 @@ error_note_container.addEventListener('click',(e) => {
   }
   errorId = box.dataset.id
   show_detail(errorId)
+})
+
+
+const my_error_btn = document.querySelector('.btn_container > .button ');
+my_error_btn.addEventListener('click',(e) => {
+  const btn = e.target;
+  btn.classList.toggle('is-light')
+  get_posts()
 })

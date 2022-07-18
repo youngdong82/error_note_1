@@ -34,15 +34,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/index/index.js" defer></script>
+  </head>
+  <body>
+    <div class="banner">
+      <img
+        class="logo_img"
+        src="../static/images/error_note_logo.png"
+        alt="logo"
+      />
+    </div>
 
+    <div class="btn_container">
+      <button class="button is-success is-light">나의 에러</button>
+    </div>
 
-    </head>
-    <body>
-      <div class="banner">
-        <img class="logo_img" src="../static/images/error_note_logo.png" alt="logo">
-      </div>
-      <div class="error_note_container">
-      </div>
-      <button class="button is-link page_btn" onclick="go_write()">작성하기</button>
-    </body>
+    <div class="error_note_container"></div>
+    <button class="button is-link page_btn" onclick="go_write()">
+      작성하기
+    </button>
+  </body>
 </html>
