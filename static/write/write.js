@@ -14,10 +14,26 @@ function errors_post() {
     }
   }
   let message = $("#message").val();
-  let state = $("#state").val();
+  let situation = $("#situation").val();
   let solution = $("#solution").val();
   let note = $("#note").val();
   let link = $("#link").val();
+
+  if(message === ''){
+    alert('오류 메세지를 작성해주세요.')
+    $("#message").focus()
+    return
+  }
+  if(situation === ''){
+    alert('오류 상황을 작성해주세요.')
+    $("#situation").focus()
+    return
+  }
+  if(solution === ''){
+    alert('오류 해결 방법을 작성해주세요.')
+    $("#solution").focus()
+    return
+  }
 
   $.ajax({
     type: "POST",
