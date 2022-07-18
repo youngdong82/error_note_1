@@ -34,3 +34,13 @@ const get_detaill = () => {
   })
 }
 window.onload = get_detaill
+
+const page_btn = document.querySelector('.page_btn');
+console.log(page_btn)
+page_btn.addEventListener('click', () => {
+  window.location.href = '/'
+})
+const logo_img = document.querySelector('.logo_img');
+logo_img.addEventListener('click', () => {
+  window.location.href = '/'
+})
