@@ -78,7 +78,6 @@ function check_dup() {
   }
     // 로딩중? 굳이?
   $("#help_id").text("확인 중 입니다").addClass("is-loading")
-  console.log(userId)
   $.ajax({
     type: "POST",
     url: "/sign_up/check_dup",

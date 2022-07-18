@@ -42,7 +42,7 @@ function errors_post() {
       createdAt: Date.now(),
       message_give: message,
       language_give: selected_lang,
-      state_give: state,
+      situation_give: situation,
       solution_give: solution,
       note_give: note,
       link_give: link,
