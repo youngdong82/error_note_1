@@ -134,7 +134,7 @@ def error_post():
         created_at = request.form['createdAt']
         message_receive = request.form['message_give']
         language_receive = request.form['language_give']
-        state_receive = request.form['state_give']
+        situation_receive = request.form['situation_give']
         solution_receive = request.form['solution_give']
         note_receive = request.form['note_give']
         link_receive = request.form['link_give']
@@ -144,7 +144,7 @@ def error_post():
             'created_at': created_at,
             'message': message_receive,
             'language': language_receive,
-            'state': state_receive,
+            'state': situation_receive,
             'solution': solution_receive,
             'note': note_receive,
             'link': link_receive
