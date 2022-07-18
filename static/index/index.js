@@ -22,7 +22,6 @@ const get_diff_time = (createdAt) => {
 function get_posts(filters) {
   // 필터 확인
   if(filters.includes('My Error')){
-    console.log('only mine')
     $.ajax({
       type: "GET",
       url: `/get_posts?my=true`,
@@ -36,7 +35,6 @@ function get_posts(filters) {
       }
     })
   } else {
-    console.log('All')
     $.ajax({
       type: "GET",
       url: `/get_posts?my=false`,
@@ -50,10 +48,7 @@ function get_posts(filters) {
       }
     })
   }
-
 }
-
-
 
 const go_write = () => {
   window.location.href= '/write'
@@ -75,26 +70,26 @@ error_note_container.addEventListener('click',(e) => {
 })
 
 
-
 // -------------------------------------------- tag_btn 관련
 let now_filter = ['Python', 'Java', 'JavaScript', 'React'];
 let now_posts = []
 let now_user = ''
+
 const re_paint_errors = (posts, user_state) => {
   $(".error_note_container").empty()
 
   now_posts = posts;
-  now_user = user_state
+  now_user = user_state;
+
+  // now_filter에 'All'이 있다면 다른 언어들로 없애주기
   if(now_filter.includes('All')){
     now_filter = [...now_filter, 'Python', 'Java', 'JavaScript', 'React'],
     now_filter.filter((each) => each != 'All');
   }
-  
+  // 받아온 포스트 시간 순으로 정렬하기
   now_posts.sort((a,b) => {
     return b['created_at'] - a['created_at']
   })
-
-  console.log(now_posts,user_state, now_filter)
 
   for (let i = 0; i < now_posts.length; i++) {
     let post = now_posts[i]
@@ -151,16 +146,14 @@ const collect_tag_btn_filter = () =>{
   if(now_filter.includes('My Error') === selected_array.includes('My Error')){
     //   같다면
     //   lang filter 적용하는 re_paint 함수 실행
-    console.log('dont need request')
+    now_filter =  selected_array
     re_paint_errors(now_posts, now_user)
   }else{
     //   다르다면
     //   	ajax 요청
-    console.log('need to request to server')
+    now_filter =  selected_array
     get_posts(selected_array)
   }
-  // 지금 필터와 now_filter 맞추기
-  now_filter =  selected_array
 }
 
 const tag_btn_logic = (e) => {
@@ -208,4 +201,4 @@ const tag_btn_container = document.querySelector('.tag_btn_container');
 tag_btn_container.addEventListener('click',tag_btn_logic)
 
 
-window.onload = get_posts([])
+window.onload = get_posts(now_filter)

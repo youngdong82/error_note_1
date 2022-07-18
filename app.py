@@ -162,11 +162,10 @@ def get_posts():
     try:
         # 포스팅 목록 받아오기
         my = request.args['my']
-        if my == True:
+        if my == 'true':
             posts = list(db.error.find({"user_id": user_state},{"link": False, "note": False, "state": False}))
-        else:
+        elif my == 'false':
             posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
-
         for post in posts:
             post["_id"] = str(post["_id"])
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "user_state": user_state})
