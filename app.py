@@ -114,9 +114,7 @@ def check_dup():
   userId_receive = request.form['userId_give']
   exists = bool(db.users.find_one({"userId": userId_receive}))
   return jsonify({'result': 'success', 'exists': exists})
-  
-  
-  
+
 # 에러_템플릿 디테일 받아오기 by siwon
 @app.route("/errors", methods=["GET"])
 def error_get():
@@ -163,7 +161,11 @@ def get_posts():
     user_state = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])['id']
     try:
         # 포스팅 목록 받아오기
-        posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
+        my = request.args['my']
+        if my == 'true':
+            posts = list(db.error.find({"user_id": user_state},{"link": False, "note": False, "state": False}))
+        elif my == 'false':
+            posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
         for post in posts:
             post["_id"] = str(post["_id"])
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "user_state": user_state})
@@ -172,6 +174,7 @@ def get_posts():
     except :
         return jsonify({"result": "fail", "msg": "실패" })
 
+# 에러_디테일 보기
 @app.route("/get_post/<error_id>", methods=['GET'])
 def get_post_error_id(error_id):
     try:

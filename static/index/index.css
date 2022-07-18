@@ -1,11 +1,51 @@
-.btn_container{
+.tag_btn_container{
   width: 500px;
   height: 50px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  margin: 20px 0px;
 }
-.btn_container .button{
+.tag_btn{
+  min-width: 70px;
+  height: 40px;
+  border-radius: 0.5rem;
+  outline: none;
+  border: 0px;
   font-size: 12px;
+  color: rgb(25, 31, 48);
+  font-weight:600;
+  opacity: 0.4;
+  cursor: pointer;
+  
+}
+.is-all{
+  background-color: rgba(204, 24, 24);
+}
+.is-python{
+  background-color: #3571A3;
+}
+.is-java{
+  background-color: #F89916;
+}
+.is-javascript{
+  background-color: #F7E017;
+}
+.is-react{
+  background-color: #60DCFA;
+}
+.is-mine{
+  background-color: #89fa60;
+}
+.selected{
+  opacity: 1;
+}
+
+.content_title_big{
+  font-size: 20px;
+  font-weight: 600;
+}
+.content_title_small{
+  font-size: 14px;
 }
 .clicked_btn{
   border: 1rem solid rgb(209, 91, 0);;
