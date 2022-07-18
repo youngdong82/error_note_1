@@ -88,7 +88,7 @@ def do_login():
             'id': loginId_receive,
             'createdAt': str(createdAt)
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf8')
 
         return jsonify({'result': 'success', 'token': token})
     # # 찾지 못하면
