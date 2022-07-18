@@ -114,9 +114,7 @@ def check_dup():
   userId_receive = request.form['userId_give']
   exists = bool(db.users.find_one({"userId": userId_receive}))
   return jsonify({'result': 'success', 'exists': exists})
-  
-  
-  
+
 # 에러_템플릿 디테일 받아오기 by siwon
 @app.route("/errors", methods=["GET"])
 def error_get():
@@ -164,11 +162,11 @@ def get_posts():
     try:
         # 포스팅 목록 받아오기
         my = request.args['my']
-        print(my)
-        if my:
+        if my == True:
             posts = list(db.error.find({"user_id": user_state},{"link": False, "note": False, "state": False}))
         else:
             posts = list(db.error.find({},{"link": False, "note": False, "state": False}))
+
         for post in posts:
             post["_id"] = str(post["_id"])
         return jsonify({"result": "success", "msg": "포스팅을 가져왔습니다.", "posts": posts, "user_state": user_state})
