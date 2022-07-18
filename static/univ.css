@@ -15,6 +15,7 @@ body{
   margin: 30px 0px;
 }
 .banner .logo_img{
+  cursor: pointer;
   width: 300px;
 }
 .paint_green{
