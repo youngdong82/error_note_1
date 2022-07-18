@@ -110,7 +110,7 @@ const re_paint_errors = (posts, user_state) => {
         `
           <div class="content">
             <div class="content_title">
-              <span class="paint_red"> ${error_msg} </span> <span>@${user_id}</span> <span>${diff_time}</span>
+              <span class="content_title_big paint_red"> ${error_msg} </span> <span class="content_title_small">@${user_id}</span> <span class="content_title_small">${diff_time}</span>
             </div>
             <div class="content_lang"><span>${error_lang}</span></div>
             <p class="content_solution paint_green">

@@ -40,8 +40,13 @@
   opacity: 1;
 }
 
-
-
+.content_title_big{
+  font-size: 20px;
+  font-weight: 600;
+}
+.content_title_small{
+  font-size: 14px;
+}
 .clicked_btn{
   border: 1rem solid rgb(209, 91, 0);;
 }
