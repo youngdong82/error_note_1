@@ -1,38 +1,18 @@
-.wrap {
-  background-color: rgb(43, 43, 43);
-  min-height: 100vh;
-  padding-bottom: 50px;
-}
-
-.banner {
-  width: 100%;
-  height: 100px;
-
-  background-color: white;
-  background-image: url('{{ url_for("static", filename="logo_red.png") }}');
-
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-
-  cursor: pointer;
-}
-
-.field {
-  width: 95%;
-  max-width: 500px;
-  margin: 20px auto 0px auto;
-}
-
-.field > label {
-  color: white;
-}
-
-.buttons {
+.error_write_box{
+  width: 500px;
+  background-color: rgb(225, 225, 225);
+  border-radius: 0.5rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-
+}
+.field{
+  width: 90%;
   margin-top: 20px;
+  margin-bottom: 60px;
+}
+.page_btn{
+  display: flex;
+  width: 500px;
+  margin: 20px 0px;
 }
