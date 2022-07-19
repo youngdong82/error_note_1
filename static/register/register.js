@@ -7,7 +7,6 @@ function is_password(asValue) {
   return regExp.test(asValue);
 }
 
-
 function sign_up() {
   let userId = $("#input-id").val()
   let pw = $("#input_pw").val()
@@ -15,10 +14,10 @@ function sign_up() {
 
   // 아이디 확인
   if ($("#help_id").hasClass("is-danger")) {
-      alert("아이디를 다시 확인해주세요.")
+      show_alert("warning","🚧 아이디를 다시 확인해주세요 🚧",document.querySelector(".dupli_btn"))
       return;
   } else if (!$("#help_id").hasClass("is-success")) {
-      alert("아이디 중복확인을 해주세요.")
+      show_alert("warning","🚧 아이디 중복확인을 해주세요 🚧",document.querySelector(".dupli_btn"))
       return;
   }
   const detail_pw = document.querySelector('.detail_pw_help')
@@ -54,13 +53,10 @@ function sign_up() {
           pw_give: pw
       },
       success: function (response) {
-          alert("회원가입을 축하드립니다!")
-          window.location.replace("/login")
+          window.location.href = "/login"
       }
   });
 }
-
-
 
 function check_dup() {
   let userId = $("#input-id").val()
@@ -94,4 +90,9 @@ function check_dup() {
         $("#help_id").removeClass("is-loading")
     }
   });
+}
+
+function replace_url(){
+  const sneek_to_login = `${window.location.href.split('register')[0]}/login`;
+  window.location.replace(sneek_to_login)
 }

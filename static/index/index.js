@@ -201,4 +201,23 @@ const tag_btn_container = document.querySelector('.tag_btn_container');
 tag_btn_container.addEventListener('click',tag_btn_logic)
 
 
-window.onload = get_posts(now_filter)
+window.onload = get_posts(now_filter);
+
+
+// --------------- 이전 링크 받아오기
+const welcome_alert = () => {
+  const right_before = document.referrer;
+  let url_route;
+  let splitted_url_route;
+  
+  url_route = right_before.split(window.location.href)[1];
+  if (url_route !== undefined){
+    splitted_url_route = url_route.split('/')[0]
+    if(splitted_url_route === 'login'){
+      show_alert('success','.🎉 로그인에 성공하셨습니다 🥳 환영합니다 🎉');
+    }
+  }else{
+    show_alert('success','🙂 환영합니다 🙂');
+  }
+}
+window.onload = welcome_alert();

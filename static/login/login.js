@@ -29,8 +29,23 @@ function sign_in() {
                 $.cookie('mytoken', response['token'], {path: '/'});
                 window.location.replace("/")
             } else {
-                alert(response['msg'])
+                show_alert('danger',`🙅‍♂️ ${response['msg']} 🙅‍♀️`, document.querySelector('#login_pw'))
             }
         }
     });
 }
+
+const success_alert = () => {
+    const right_before = document.referrer;
+    let url_route;
+    let splitted_url_route;
+    url_route = right_before.split(window.location.href.split('login')[0])[1];
+    if (url_route !== undefined){
+        splitted_url_route = url_route.split('/')[0]
+        console.log(splitted_url_route)
+        if(splitted_url_route === 'register'){
+        show_alert('success','.🎉 회원 가입 완료 🎉');
+        }
+    }
+}
+window.onload = success_alert();
