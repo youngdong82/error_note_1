@@ -98,22 +98,22 @@ def do_login():
 # 회원가입하기/회원 정보 저장하기 by youngdong
 @app.route('/sign_up/save', methods=['POST'])
 def do_sign_up():
-  userId_receive = request.form["userId_give"]
-  pw_receive = request.form["pw_give"]
-  pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
-  doc = {
-    "userId": userId_receive,
-    "pw": pw_hash,
-  }
-  db.users.insert_one(doc)
-  return jsonify({'result': 'success'})
+    userId_receive = request.form["userId_give"]
+    pw_receive = request.form["pw_give"]
+    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+    doc = {
+        "userId": userId_receive,
+        "pw": pw_hash,
+    }
+    db.users.insert_one(doc)
+    return jsonify({'result': 'success'})
 
 # 아이디 중복여부 확인하기 by youngdong
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
-  userId_receive = request.form['userId_give']
-  exists = bool(db.users.find_one({"userId": userId_receive}))
-  return jsonify({'result': 'success', 'exists': exists})
+    userId_receive = request.form['userId_give']
+    exists = bool(db.users.find_one({"userId": userId_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
 
 # 에러_템플릿 디테일 받아오기 by siwon
 @app.route("/errors", methods=["GET"])
