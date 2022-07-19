@@ -121,6 +121,7 @@ const re_paint_errors = (posts, user_state) => {
       $(".error_note_container").append(section)
     }
   }
+  empty_container_checker()
 }
 
 const collect_tag_btn_filter = () =>{
@@ -221,3 +222,18 @@ const welcome_alert = () => {
   }
 }
 window.onload = welcome_alert();
+
+const empty_container_checker = () => {
+  const error_note_container = document.querySelector('.error_note_container');
+  if(error_note_container.children.length === 0){
+    error_note_container.innerHTML = 
+    `
+  <div class="box empty_box">
+    <div class="content">
+      에러가 없습니다
+    </div>
+  </div>
+    `
+  }
+
+} 
