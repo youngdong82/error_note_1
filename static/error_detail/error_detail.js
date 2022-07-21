@@ -9,24 +9,22 @@ const get_detaill = () => {
     success: function (response) {
       if (response["result"] == "success") {
         const detail = response["detail"]
-        const error_detail_box = document.querySelector('.error_detail_box');
-        error_detail_box.innerHTML = `
-        <div class="field">
-          <div class="box">
-            <label class="label">오류메세지</label>
-                <span>${detail.message}</span>
-            <label class="label">사용언어</label>
-                <span>${detail.language}</span>
-            <label class="label">오류 상황</label>
-                <span>${detail.status}</span>
-            <label class="label">오류 해결 방법</label>
-                <span>${detail.solution}</span>
-            <label class="label">관련 개념</label>
-                <span>${detail.note === '' ? "-----" : detail.note}</span>
-            <label class="label">참고 링크</label>
-                <a href='${detail.link}' >${detail.link}</a>
-          </div>
-        </div>
+        const error_container = document.querySelector('.error_container');
+        error_container.innerHTML = `
+        <section class="box">
+          <label class="label">오류메세지</label>
+              <span>${detail.message}</span>
+          <label class="label">사용언어</label>
+              <span>${detail.language}</span>
+          <label class="label">오류 상황</label>
+              <span>${detail.status}</span>
+          <label class="label">오류 해결 방법</label>
+              <span>${detail.solution}</span>
+          <label class="label">관련 개념</label>
+              <span>${detail.note === '' ? "-----" : detail.note}</span>
+          <label class="label">참고 링크</label>
+              <a href='${detail.link}' >${detail.link}</a>
+        </section>
         `;
       }
     }
