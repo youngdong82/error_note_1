@@ -32,81 +32,65 @@
           alt="logo"
         />
       </div>
-      <div class="error_write_box">
+      <div class="error_write_container">
         <div class="field">
           <label class="label">오류메세지</label>
-          <div class="control">
-            <input
-              id="message"
-              class="input"
-              type="text"
-              placeholder="내용을 입력해주세요"
-            />
-          </div>
+          <input
+            id="message"
+            class="input"
+            type="text"
+            placeholder="내용을 입력해주세요"
+          />
         </div>
 
         <div class="field">
           <label class="label">사용언어</label>
-          <div class="control">
-            <select id="lang_select">
-              <option value="" selected disabled>언어를 선택하세요.</option>
-              <option value="Python">Python</option>
-              <option value="Java">Java</option>
-              <option value="JavaScript">JavaScript</option>
-              <option value="React">React</option>
-            </select>
-          </div>
+          <select id="lang_select">
+            <option value="" selected disabled>언어를 선택하세요.</option>
+            <option value="Python">Python</option>
+            <option value="Java">Java</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="React">React</option>
+          </select>
         </div>
 
         <div class="field">
           <label class="label">오류 상황</label>
-          <div class="control">
-            <textarea
-              id="situation"
-              class="textarea"
-              placeholder="내용을 입력해주세요"
-            ></textarea>
-          </div>
+          <textarea
+            id="situation"
+            class="textarea"
+            placeholder="내용을 입력해주세요"
+          ></textarea>
         </div>
 
         <div class="field">
           <label class="label">오류 해결 방법</label>
-          <div class="control">
-            <textarea
-              id="solution"
-              class="textarea"
-              placeholder="내용을 입력해주세요"
-            ></textarea>
-          </div>
+          <textarea
+            id="solution"
+            class="textarea"
+            placeholder="내용을 입력해주세요"
+          ></textarea>
         </div>
 
         <div class="field">
           <label class="label">관련 개념</label>
-          <div class="control">
-            <textarea
-              id="note"
-              class="textarea"
-              placeholder="내용을 입력해주세요"
-            ></textarea>
-          </div>
+          <textarea
+            id="note"
+            class="textarea"
+            placeholder="내용을 입력해주세요"
+          ></textarea>
         </div>
 
         <div class="field">
           <label class="label">참고 링크</label>
-          <div class="control">
-            <textarea
-              id="link"
-              class="textarea"
-              placeholder="참고한 자료를 입력해주세요"
-            ></textarea>
-          </div>
+          <textarea
+            id="link"
+            class="textarea"
+            placeholder="참고한 자료를 입력해주세요"
+          ></textarea>
         </div>
       </div>
-      <div class="buttons">
-        <button onclick="errors_post()" class="button is-link page_btn">
-          작성하기
-        </button>
-      </div>
+      <button class="button page_btn" onclick="errors_post()">작성하기</button>
     </div>
   </body>
 </html>

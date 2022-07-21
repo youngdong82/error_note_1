@@ -7,7 +7,7 @@ function errors_post() {
     if(each_lang_select.selected === true){
       selected_lang = each_lang_select.value
       if(selected_lang === ''){
-        show_alert('warning', '언어를 선택해주세요.',lang_select)
+        show_alert('warning', '🚧 언어를 선택해주세요 🚧',lang_select)
         return
       }
       break
