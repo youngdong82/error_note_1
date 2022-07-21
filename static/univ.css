@@ -10,17 +10,7 @@ body{
 body::-webkit-scrollbar{
   z-index: 3;
 }
-.banner{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 70px;
-}
-.banner .logo_img{
-  cursor: pointer;
-  width: 300px;
-}
+
 .alert_box{
   display: none;
   width: 100%;
@@ -49,6 +39,36 @@ body::-webkit-scrollbar{
   background-color: #04AA6D;
   color: rgb(25, 31, 48);
 }
+.max_width{
+  width: 500px;
+}
+
+.banner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
+.banner .logo_img{
+  cursor: pointer;
+  width: 300px;
+}
+
+.page_btn{
+  display: block;
+  width: 500px;
+  margin-bottom: 10px;
+  background-color: #3273dc;
+  border-color: transparent;
+  color: #fff;
+
+}
+.back_to_login_signin{
+  text-align: center;
+}
+
+
 .paint_green{
   color: rgb(0, 154, 13);
 }
