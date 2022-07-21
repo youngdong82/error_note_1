@@ -1,5 +1,5 @@
 .field .label{
-  color: white;
+  color: var(--color-white)
 }
 .check_id{
   display: flex;
@@ -14,11 +14,11 @@
   align-items: center;
 }
 .detail_pw_help{
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 
 .error_message{
-  color: red;
+  color: var(--color-danger);
   text-align: center;
   margin: 20px 0px;
 }

@@ -11,12 +11,11 @@
   border-radius: 0.5rem;
   outline: none;
   border: 0px;
-  font-size: 12px;
-  color: rgb(25, 31, 48);
-  font-weight:600;
+  font-size: var(--font-small);
+  color: var(--color-background);
+  font-weight: var(--weight-bold);
   opacity: 0.4;
   cursor: pointer;
-  
 }
 .is-all{
   background-color: rgba(204, 24, 24);
@@ -41,26 +40,20 @@
 }
 
 
-.clicked_btn{
-  border: 1rem solid rgb(209, 91, 0);;
-}
-
-
-
 .box{
   width: 500px;
   margin: 20px 0px;
+  cursor: pointer;
 }
 .section_title{
-  font-size: 18px;
   margin-bottom: 14px;
 }
 .section_title_big{
-  font-size: 20px;
-  font-weight: 600;
+  font-size: var(--font-big);
+  font-weight: var(--weight-bold);
 }
 .section_title_small{
-  font-size: 14px;
+  font-size: var(--font-small)
 }
 .section_lang{
   display: flex;
@@ -68,13 +61,13 @@
   margin-bottom: 30px;
 }
 .section_solution{
-  font-size: 14px;
+  font-size: var(--font-standard);
 }
 
 .empty_box{
   height: 360px;
   border: 2px dashed;
-  background-color: rgb(30, 37, 57);
+  background-color: var(--color-background-light);
   display: flex;
   justify-content: center;
   align-items: center;

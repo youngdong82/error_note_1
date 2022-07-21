@@ -1,8 +1,8 @@
 .field .label{
-  color: white;
+  color: var(--color-white);
 }
 .error_message{
-  color: red;
+  color: var(--color-danger);
   text-align: center;
   margin: 20px 0px;
 }
