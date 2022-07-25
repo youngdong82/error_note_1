@@ -76,8 +76,9 @@ def error_detail(error_id):
 @app.route('/sign_in', methods=['POST'])
 def do_login():
     # 로그인
-    loginId_receive = request.form['loginId_give']
-    loginPw_receive = request.form['loginPw_give']
+    jsonData = request.json;
+    loginId_receive = jsonData['loginId_give']
+    loginPw_receive = jsonData['loginPw_give']
 
     pw_hash = hashlib.sha256(loginPw_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'userId': loginId_receive, 'pw': pw_hash})
