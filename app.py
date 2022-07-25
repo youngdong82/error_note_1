@@ -134,13 +134,14 @@ def error_post():
     try:
         token_data = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_id = token_data['id']
-        created_at = request.form['createdAt']
-        message_receive = request.form['message_give']
-        language_receive = request.form['language_give']
-        situation_receive = request.form['situation_give']
-        solution_receive = request.form['solution_give']
-        note_receive = request.form['note_give']
-        link_receive = request.form['link_give']
+        jsonData = request.json
+        created_at = jsonData['createdAt']
+        message_receive = jsonData['message_give']
+        language_receive = jsonData['language_give']
+        situation_receive = jsonData['situation_give']
+        solution_receive = jsonData['solution_give']
+        note_receive = jsonData['note_give']
+        link_receive = jsonData['link_give']
 
         doc = {
             'user_id': user_id,
