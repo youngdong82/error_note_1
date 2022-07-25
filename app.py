@@ -98,8 +98,9 @@ def do_login():
 # 회원가입하기/회원 정보 저장하기 by youngdong
 @app.route('/sign_up/save', methods=['POST'])
 def do_sign_up():
-    userId_receive = request.form["userId_give"]
-    pw_receive = request.form["pw_give"]
+    jsonData = request.json
+    userId_receive = jsonData['userId_give']
+    pw_receive = jsonData['pw_give']
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
     doc = {
         "userId": userId_receive,
@@ -111,7 +112,8 @@ def do_sign_up():
 # 아이디 중복여부 확인하기 by youngdong
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
-    userId_receive = request.form['userId_give']
+    jsonData = request.json
+    userId_receive = jsonData['userId_give']
     exists = bool(db.users.find_one({"userId": userId_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 

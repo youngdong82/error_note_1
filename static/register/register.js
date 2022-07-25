@@ -7,89 +7,125 @@ function is_password(asValue) {
   return regExp.test(asValue);
 }
 
-function sign_up() {
-  let userId = $("#input-id").val()
-  let pw = $("#input_pw").val()
-  let pw2 = $("#input_pw2").val()
+async function sign_up() {
+  const input_id = document.querySelector('#input_id');
+  const input_pw = document.querySelector('#input_pw');
+  const input_pw2 = document.querySelector('#input_pw2');
 
   // 아이디 확인
-  if ($("#help_id").hasClass("is-danger")) {
+  const help_id = document.querySelector('#help_id');
+  const error_message = document.querySelector('.error_message');
+  const detail_pw = document.querySelector('.detail_pw_help');
+
+
+  if (Array.from(help_id.classList).includes("paint_red")) {
       show_alert("warning","🚧 아이디를 다시 확인해주세요 🚧",document.querySelector(".dupli_btn"))
       return;
-  } else if (!$("#help_id").hasClass("is-success")) {
+  } else if (!Array.from(help_id.classList).includes("paint_green")) {
       show_alert("warning","🚧 아이디 중복확인을 해주세요 🚧",document.querySelector(".dupli_btn"))
       return;
   }
-  const detail_pw = document.querySelector('.detail_pw_help')
-  if (pw == "" | pw == undefined) {
-      $("#help_msg").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-      detail_pw.classList.add('paint_green')
-      $("#input_pw").focus()
+
+  if (input_pw.value == "" | input_pw.value == undefined) {
+      error_message.classList.remove("paint_green");
+      error_message.classList.add("paint_red");
+      error_message.innerHTML = "비밀번호를 입력해주세요";
+      detail_pw.classList.add('paint_green');
+      input_pw.focus()
       return;
-  } else if (!is_password(pw)) {
-      $("#help_msg").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
-      $("#input_pw").focus()
+  } else if (!is_password(input_pw.value)) {
+    console.log('here?')
+      error_message.classList.remove("paint_green");
+      error_message.classList.add("paint_red");
+      error_message.innerHTML = "비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자";
+      input_pw.focus()
       return
   } else {
     detail_pw.innerHTML = "사용할 수 있는 비밀번호입니다."
   }
 
-  if (pw2 == "") {
-      $("#help_msg").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-      $("#input_pw2").focus()
+  if (input_pw2.value == "") {
+      error_message.classList.remove("paint_green");
+      error_message.classList.add("paint_red");
+      error_message.innerHTML = "비밀번호를 입력해주세요";
+      input_pw2.focus()
       return;
-  } else if (pw2 != pw) {
-      $("#help_msg").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
-      $("#input_pw2").focus()
+  } else if (input_pw2.value != input_pw.value) {
+      error_message.classList.remove("paint_green");
+      error_message.classList.add("paint_red");
+      error_message.innerHTML = "비밀번호가 일치하지 않습니다";
+      input_pw2.focus()
       return;
   } else {
-      $("#help_msg").text("").removeClass("is-danger").addClass("is-success")
+    error_message.classList.remove("paint_red");
+    error_message.classList.add("paint_green");
+    error_message.innerHTML = "";
   }
-  $.ajax({
-      type: "POST",
-      url: "/sign_up/save",
-      data: {
-          userId_give: userId,
-          pw_give: pw
-      },
-      success: function (response) {
-          window.location.href = "/login"
-      }
-  });
+  const payload = {
+    userId_give: input_id.value,
+    pw_give: input_pw.value
+  }
+  console.log(payload)
+
+  const res = await fetch("/sign_up/save",{
+    method: "POST",
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  })
+  console.log(res)
+  if(res.ok){
+    window.location.href = "/login"
+    return
+  }
+  throw new Error('Error in post with fetch');
 }
 
-function check_dup() {
-  let userId = $("#input-id").val()
-  if (userId == "") {
-    $("#help_id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
-    $("#input-id").focus()
+async function check_dup () {
+  const input_id = document.querySelector('#input_id');
+  const help_id = document.querySelector('#help_id');
+
+  if (input_id.value == "") {
+    help_id.classList.add("paint_red");
+    help_id.classList.remove("paint_green");
+    help_id.innerHTML = '아이디를 입력해주세요';
+    input_id.focus()
     return;
   }
-  const help_id = document.querySelector('#help_id')
-  if (!is_nickname(userId)) {
-    $("#help_id").text("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
-    help_id.className.add("paint_red")
-    $("#input-id").focus()
+  if (!is_nickname(input_id.value)) {
+    help_id.classList.add("paint_red")
+    help_id.classList.remove("paint_green");
+    help_id.innerHTML = '아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이';
+    input_id.focus()
     return;
   }
     // 로딩중? 굳이?
-  $("#help_id").text("확인 중 입니다").addClass("is-loading")
-  $.ajax({
-    type: "POST",
-    url: "/sign_up/check_dup",
-    data: {
-        userId_give: userId
-    },
-    success: function (response) {
-        if (response["exists"]) {
-            $("#help_id").text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
-            $("#input-username").focus()
-        } else {
-            $("#help_id").text("사용할 수 있는 아이디입니다.").removeClass("is-danger").addClass("is-success")
-        }
-        $("#help_id").removeClass("is-loading")
+  help_id.classList.add("is-loading");
+  help_id.innerHTML = '확인 중 입니다';
+
+  const payload = {
+    userId_give: input_id.value
+  };
+  const res = await fetch(`/sign_up/check_dup`,{
+    method: 'POST',
+    headers:{'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  })
+  if(res.ok){
+    const json = await res.json();
+    if (json["exists"]) {
+      help_id.classList.add("paint_red");
+      help_id.classList.remove("paint_green");
+      help_id.innerHTML = '이미 존재하는 아이디입니다';
+      input_id.focus()
+    } else {
+        help_id.classList.add("paint_green");
+        help_id.classList.remove("paint_red");
+        help_id.innerHTML = '사용할 수 있는 아이디입니다';
     }
-  });
+    help_id.classList.remove("is-loading");
+    return 
+  }
+  throw new Error('Error in post with fetch')
 }
 
 function replace_url(){
