@@ -19,34 +19,40 @@ const get_diff_time = (createdAt) => {
   return final_diff
 }
 
-function get_posts(filters) {
+async function get_posts(filters) {
   // 필터 확인
   if(filters.includes('My Error')){
-    $.ajax({
-      type: "GET",
-      url: `/get_posts?my=true`,
-      data: {},
-      success: function (response) {
-        if (response["result"] == "success") {
-          posts = response["posts"]
-          user_state = response['user_state']
-          re_paint_errors(posts,user_state)
-        }
-      }
+    const res = await fetch(`/get_posts?my=true`,{
+      method: 'GET'
     })
+    if(res.ok){
+      const data = await res.json();
+      if(data["result"] === 'success'){
+        posts = data["posts"]
+        user_state = data['user_state']
+        re_paint_errors(posts,user_state)
+      } else{
+        throw new Error(data['msg'])
+      }
+      return
+    }
+    throw new Error('error in fetch')
   } else {
-    $.ajax({
-      type: "GET",
-      url: `/get_posts?my=false`,
-      data: {},
-      success: function (response) {
-        if (response["result"] == "success") {
-          posts = response["posts"]
-          user_state = response['user_state']
-          re_paint_errors(posts,user_state)
-        }
-      }
+    const res = await fetch(`/get_posts?my=false`,{
+      method: 'GET'
     })
+    if(res.ok){
+      const data = await res.json();
+      if(data["result"] === 'success'){
+        posts = data["posts"]
+        user_state = data['user_state']
+        re_paint_errors(posts,user_state)
+      } else{
+        throw new Error(data['msg'])
+      }
+      return
+    }
+    throw new Error('error in fetch')
   }
 }
 
@@ -76,7 +82,9 @@ let now_posts = []
 let now_user = ''
 
 const re_paint_errors = (posts, user_state) => {
-  $(".error_container").empty()
+  const error_container = document.querySelector('.error_container');
+
+  error_container.innerHTML = ""
 
   now_posts = posts;
   now_user = user_state;
@@ -116,7 +124,7 @@ const re_paint_errors = (posts, user_state) => {
               ${error_solu}
           </p>
         `
-      $(".error_container").append(section)
+      error_container.appendChild(section)
     }
   }
   empty_container_checker()
