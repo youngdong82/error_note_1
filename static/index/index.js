@@ -19,34 +19,40 @@ const get_diff_time = (createdAt) => {
   return final_diff
 }
 
-function get_posts(filters) {
+async function get_posts(filters) {
   // 필터 확인
   if(filters.includes('My Error')){
-    $.ajax({
-      type: "GET",
-      url: `/get_posts?my=true`,
-      data: {},
-      success: function (response) {
-        if (response["result"] == "success") {
-          posts = response["posts"]
-          user_state = response['user_state']
-          re_paint_errors(posts,user_state)
-        }
-      }
+    const res = await fetch(`/get_posts?my=true`,{
+      method: 'GET'
     })
+    if(res.ok){
+      const data = await res.json();
+      if(data["result"] === 'success'){
+        posts = data["posts"]
+        user_state = data['user_state']
+        re_paint_errors(posts,user_state)
+      } else{
+        throw new Error(data['msg'])
+      }
+      return
+    }
+    throw new Error('error in fetch')
   } else {
-    $.ajax({
-      type: "GET",
-      url: `/get_posts?my=false`,
-      data: {},
-      success: function (response) {
-        if (response["result"] == "success") {
-          posts = response["posts"]
-          user_state = response['user_state']
-          re_paint_errors(posts,user_state)
-        }
-      }
+    const res = await fetch(`/get_posts?my=false`,{
+      method: 'GET'
     })
+    if(res.ok){
+      const data = await res.json();
+      if(data["result"] === 'success'){
+        posts = data["posts"]
+        user_state = data['user_state']
+        re_paint_errors(posts,user_state)
+      } else{
+        throw new Error(data['msg'])
+      }
+      return
+    }
+    throw new Error('error in fetch')
   }
 }
 
@@ -59,8 +65,8 @@ const show_detail = (errorId) => {
 }
 
 // 디테일 화면 연결하기
-const error_note_container = document.querySelector('.error_note_container');
-error_note_container.addEventListener('click',(e) => {
+const error_container = document.querySelector('.error_container');
+error_container.addEventListener('click',(e) => {
   const box = e.target.closest('.box');
   if(!box){
     return
@@ -76,7 +82,9 @@ let now_posts = []
 let now_user = ''
 
 const re_paint_errors = (posts, user_state) => {
-  $(".error_note_container").empty()
+  const error_container = document.querySelector('.error_container');
+
+  error_container.innerHTML = ""
 
   now_posts = posts;
   now_user = user_state;
@@ -108,17 +116,15 @@ const re_paint_errors = (posts, user_state) => {
       section.dataset.id = errorId
       section.innerHTML = 
         `
-          <div class="content">
-            <div class="content_title">
-              <span class="content_title_big paint_red"> ${error_msg} </span> <span class="content_title_small">@${user_id}</span> <span class="content_title_small">${diff_time}</span>
-            </div>
-            <div class="content_lang"><span>${error_lang}</span></div>
-            <p class="content_solution paint_green">
-                ${error_solu}
-            </p>
+          <div class="section_title">
+            <span class="section_title_big paint_red"> ${error_msg} </span> <span class="section_title_small">@${user_id}</span> <span class="section_title_small">${diff_time}</span>
           </div>
+          <div class="section_lang"><span>${error_lang}</span></div>
+          <p class="section_solution paint_green">
+              ${error_solu}
+          </p>
         `
-      $(".error_note_container").append(section)
+      error_container.appendChild(section)
     }
   }
   empty_container_checker()
@@ -224,15 +230,15 @@ const welcome_alert = () => {
 window.onload = welcome_alert();
 
 const empty_container_checker = () => {
-  const error_note_container = document.querySelector('.error_note_container');
+  const error_note_container = document.querySelector('.error_container');
   if(error_note_container.children.length === 0){
     error_note_container.innerHTML = 
     `
-  <div class="box empty_box">
-    <div class="content">
+  <section class="box empty_box">
+    <div>
       에러가 없습니다
     </div>
-  </div>
+  </section>
     `
   }
 

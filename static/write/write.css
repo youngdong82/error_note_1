@@ -1,18 +1,14 @@
-.error_write_box{
+.error_write_container{
   width: 500px;
-  background-color: rgb(225, 225, 225);
+  background-color: var(--color-grey);
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 20px;
 }
 .field{
   width: 90%;
   margin-top: 20px;
   margin-bottom: 60px;
-}
-.page_btn{
-  display: flex;
-  width: 500px;
-  margin: 20px 0px;
 }

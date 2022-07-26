@@ -1,4 +1,4 @@
-function errors_post() {
+async function errors_post() {
   let selected_lang
   const lang_select = document.querySelector('#lang_select');
   for (let i=0; i<lang_select.length; i++){
@@ -7,49 +7,48 @@ function errors_post() {
     if(each_lang_select.selected === true){
       selected_lang = each_lang_select.value
       if(selected_lang === ''){
-        show_alert('warning', '언어를 선택해주세요.',lang_select)
+        show_alert('warning', '🚧 언어를 선택해주세요 🚧',lang_select)
         return
       }
       break
     }
   }
-  const message_ele = document.querySelector('#message');
-  const situation_ele = document.querySelector('#situation');
-  const solution_ele = document.querySelector('#solution');
+  const message = document.querySelector('#message');
+  const situation = document.querySelector('#situation');
+  const solution = document.querySelector('#solution');
+  const note = document.querySelector('#note');
+  const link = document.querySelector('#link');
 
-  let message = message_ele.value;
-  let situation = situation_ele.value;
-  let solution = solution_ele.value;
-  let note = $("#note").val();
-  let link = $("#link").val();
 
-  if(message === ''){
-    show_alert('warning','🚧 오류 메세지를 작성해주세요 🚧',message_ele)
+  if(message.value === ''){
+    show_alert('warning','🚧 오류 메세지를 작성해주세요 🚧',message)
     return
   }
-  if(situation === ''){
-    show_alert('warning','🚧 오류 상황을 작성해주세요 🚧',situation_ele)
+  if(situation.value === ''){
+    show_alert('warning','🚧 오류 상황을 작성해주세요 🚧',situation)
     return
   }
-  if(solution === ''){
-    show_alert('warning','🚧 오류 해결 방법을 작성해주세요 🚧',solution_ele)
+  if(solution.value === ''){
+    show_alert('warning','🚧 오류 해결 방법을 작성해주세요 🚧',solution)
     return
   }
-
-  $.ajax({
-    type: "POST",
-    url: "/error_post",
-    data: {
-      createdAt: Date.now(),
-      message_give: message,
-      language_give: selected_lang,
-      situation_give: situation,
-      solution_give: solution,
-      note_give: note,
-      link_give: link,
-    },
-    success: function (response) {
-      window.location.href = "/";
-    },
-  });
+  const payload = {
+    createdAt: Date.now(),
+    message_give: message.value,
+    language_give: selected_lang,
+    situation_give: situation.value,
+    solution_give: solution.value,
+    note_give: note.value,
+    link_give: link.value
+  }
+  const res  = await fetch("/error_post", {
+    method: "POST",
+    headers: {"Content-Type": 'application/json'},
+    body: JSON.stringify(payload)
+  })
+  if(res.ok){
+    window.location.href = "/";
+    return
+  }
+  throw new Error('Error in post with fetch');
 }

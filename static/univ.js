@@ -17,8 +17,7 @@ const show_alert = (alert_type, alert_message,target) => {
     <div>${alert_message}</div>
   `
   alert_box.classList.add('alert_live')
-  if(target!== undefined){
-    console.log(target)
+  if(target !== undefined){
     target.scrollIntoView({behavior: "smooth", block:"center"})
     target.focus({preventScroll: true})
   }

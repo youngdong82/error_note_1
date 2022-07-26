@@ -1,4 +1,8 @@
-#login_btn{
-  display: block;
-  width: 500px;
+.field .label{
+  color: var(--color-white);
+}
+.error_message{
+  color: var(--color-danger);
+  text-align: center;
+  margin: 20px 0px;
 }

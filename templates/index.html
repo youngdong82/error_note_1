@@ -31,36 +31,33 @@
     <link rel="stylesheet" href="../static/index/index.css" />
 
     <!-- JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/univ.js" defer></script>
     <script src="../static/index/index.js" defer></script>
   </head>
   <body>
     <div class="alert_box"></div>
-    <div class="banner">
-      <img
-        class="logo_img"
-        src="../static/images/error_note_logo.png"
-        alt="logo"
-      />
-    </div>
-    <div class="tag_btn_container">
-      <div class="univ_btn">
-        <button class="tag_btn is-all selected">All</button>
-        <button class="tag_btn is-mine">My Error</button>
+    <div class="max_width">
+      <div class="banner">
+        <img
+          class="logo_img"
+          src="../static/images/error_note_logo.png"
+          alt="logo"
+        />
       </div>
-      <div class="lang_btn">
-        <button class="tag_btn is-python">Python</button>
-        <button class="tag_btn is-java">Java</button>
-        <button class="tag_btn is-javascript">JavaScript</button>
-        <button class="tag_btn is-react">React</button>
+      <div class="tag_btn_container">
+        <div class="univ_btn">
+          <button class="tag_btn is-all selected">All</button>
+          <button class="tag_btn is-mine">My Error</button>
+        </div>
+        <div class="lang_btn">
+          <button class="tag_btn is-python">Python</button>
+          <button class="tag_btn is-java">Java</button>
+          <button class="tag_btn is-javascript">JavaScript</button>
+          <button class="tag_btn is-react">React</button>
+        </div>
       </div>
+      <div class="error_container"></div>
+      <button class="button page_btn" onclick="go_write()">작성하기</button>
     </div>
-
-    <div class="error_note_container"></div>
-    <button class="button is-link page_btn" onclick="go_write()">
-      작성하기
-    </button>
   </body>
 </html>

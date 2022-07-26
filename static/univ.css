@@ -1,26 +1,55 @@
+:root {
+  /* color */
+  --color-background: rgb(25, 31, 48);
+  --color-background-light: rgb(30, 37, 57);
+  --color-pain-btn: #3273dc;
+  --color-grey: rgb(225, 225, 225);
+  --color-white: rgb(216, 224, 245);
+  --color-good: #04AA6D;
+  --color-warning: #FF9800;
+  --color-danger: #F44336;
+
+  /* Font size */
+  --font-small: 12px;
+  --font-standard: 16px;
+  --font-big: 20px;
+
+  /* Font weight */
+  --weight-standard: 400;
+  --weight-bold: 600;
+}
+/* universe */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0px;
+}
+p {
+  margin: 0px;
+}
+button {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+}
+
 body{
   height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(25, 31, 48);
+  background-color: var(--color-background);
   overflow-y: scroll;
 }
 body::-webkit-scrollbar{
   z-index: 3;
 }
-.banner{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 70px;
-}
-.banner .logo_img{
-  cursor: pointer;
-  width: 300px;
-}
+
 .alert_box{
   display: none;
   width: 100%;
@@ -34,24 +63,55 @@ body::-webkit-scrollbar{
 }
 .alert_box div{
   font-weight: 600;
-  font-size: 16px;
+  font-size: var(--weight-standard);
   margin: 10px 0px;
 }
 .alert_warning{
-  background-color: #FF9800;
-  color: rgb(25, 31, 48);
+  background-color: var(--color-warning);
+  color: var(--color-background);
 }
 .alert_danger{
-  background-color: #F44336;
-  color: rgb(216, 224, 245);
+  background-color: var(--color-danger);
+  color: var(--color-white)
 }
 .alert_good{
-  background-color: #04AA6D;
-  color: rgb(25, 31, 48);
+  background-color: var(--color-good);
+  color: var(--color-background);
 }
+.max_width{
+  width: 500px;
+}
+
+.banner{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
+.banner .logo_img{
+  cursor: pointer;
+  width: 300px;
+}
+.error_container{
+  width: 500px;
+}
+.page_btn{
+  display: block;
+  width: 500px;
+  margin-bottom: 10px;
+  background-color: var(--color-pain-btn);
+  border-color: transparent;
+  color: var(--color-white)
+}
+
+.back_to_login_signin{
+  text-align: center;
+}
+
 .paint_green{
-  color: rgb(0, 154, 13);
+  color: var(--color-good);
 }
 .paint_red{
-  color: red;
+  color: var(--color-danger);
 }

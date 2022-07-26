@@ -1,13 +1,5 @@
-.max_width{
-  width: 500px;
-}
-
-#submit_btn{
-  display: block;
-  width: 500px;
-}
 .field .label{
-  color: white;
+  color: var(--color-white)
 }
 .check_id{
   display: flex;
@@ -19,16 +11,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .detail_pw_help{
-  font-size: 10px;
+  font-size: var(--font-small);
 }
 
 .error_message{
-  color: red;
+  color: var(--color-danger);
   text-align: center;
   margin: 20px 0px;
-}
-.back_to_login{
-  text-align: center;
 }

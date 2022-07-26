@@ -76,8 +76,9 @@ def error_detail(error_id):
 @app.route('/sign_in', methods=['POST'])
 def do_login():
     # 로그인
-    loginId_receive = request.form['loginId_give']
-    loginPw_receive = request.form['loginPw_give']
+    jsonData = request.json;
+    loginId_receive = jsonData['loginId_give']
+    loginPw_receive = jsonData['loginPw_give']
 
     pw_hash = hashlib.sha256(loginPw_receive.encode('utf-8')).hexdigest()
     result = db.users.find_one({'userId': loginId_receive, 'pw': pw_hash})
@@ -98,8 +99,9 @@ def do_login():
 # 회원가입하기/회원 정보 저장하기 by youngdong
 @app.route('/sign_up/save', methods=['POST'])
 def do_sign_up():
-    userId_receive = request.form["userId_give"]
-    pw_receive = request.form["pw_give"]
+    jsonData = request.json
+    userId_receive = jsonData['userId_give']
+    pw_receive = jsonData['pw_give']
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
     doc = {
         "userId": userId_receive,
@@ -111,7 +113,8 @@ def do_sign_up():
 # 아이디 중복여부 확인하기 by youngdong
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
-    userId_receive = request.form['userId_give']
+    jsonData = request.json
+    userId_receive = jsonData['userId_give']
     exists = bool(db.users.find_one({"userId": userId_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
@@ -131,13 +134,14 @@ def error_post():
     try:
         token_data = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_id = token_data['id']
-        created_at = request.form['createdAt']
-        message_receive = request.form['message_give']
-        language_receive = request.form['language_give']
-        situation_receive = request.form['situation_give']
-        solution_receive = request.form['solution_give']
-        note_receive = request.form['note_give']
-        link_receive = request.form['link_give']
+        jsonData = request.json
+        created_at = jsonData['createdAt']
+        message_receive = jsonData['message_give']
+        language_receive = jsonData['language_give']
+        situation_receive = jsonData['situation_give']
+        solution_receive = jsonData['solution_give']
+        note_receive = jsonData['note_give']
+        link_receive = jsonData['link_give']
 
         doc = {
             'user_id': user_id,

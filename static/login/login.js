@@ -1,38 +1,45 @@
-function sign_in() {
-    let loginId = $("#login_id").val()
-    let loginPw = $("#login_pw").val()
+async function sign_in() {
+    const login_id = document.querySelector('#login_id');
+    const login_pw = document.querySelector('#login_pw');
+    const error_message = document.querySelector('.error_message');
             
-    if (loginId == "") {
-        $("#login_msg").text("아이디를 입력해주세요.")
-        $("#login_id").focus()
+    if (login_id.value == "") {
+        error_message.innerHTML = "아이디를 입력해주세요."
+        login_id.focus()
         return;
     } else {
-        $("#login_msg").text("")
+        error_message.innerHTML = "";
     }
 
-    if (loginPw == "") {
-        $("#login_msg").text("비밀번호를 입력해주세요.")
-        $("#login_pw").focus()
+    if (login_pw.value == "") {
+        error_message.innerHTML = "비밀번호를 입력해주세요";
+        login_pw.focus()
         return;
     } else {
-        $("#login_msg").text("")
+        error_message.innerHTML = "";
     }
-    $.ajax({
-        type: "POST",
-        url: "/sign_in",
-        data: {
-            loginId_give: loginId,
-            loginPw_give: loginPw
-        },
-        success: function (response) {
-            if (response['result'] == 'success') {
-                $.cookie('mytoken', response['token'], {path: '/'});
-                window.location.replace("/")
-            } else {
-                show_alert('danger',`🙅‍♂️ ${response['msg']} 🙅‍♀️`, document.querySelector('#login_pw'))
-            }
+    const payload = {
+        loginId_give: login_id.value,
+        loginPw_give: login_pw.value
+    };
+    const res = await fetch("/sign_in",{
+        method: "POST",
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+    })
+    if(res.ok){
+        const data = await res.json();
+
+        if (data['result'] == 'success') {
+            console.log('successs!')
+            document.cookie = `mytoken=${data['token']}`
+            window.location.replace("/")
+        } else {
+            show_alert('danger',`🙅‍♂️ ${data['msg']} 🙅‍♀️`, document.querySelector('#login_pw'))
         }
-    });
+        return
+    }
+    throw new Error('Error in post with fetch');
 }
 
 const success_alert = () => {
